@@ -38,7 +38,7 @@ public class TestExample {
             e.printStackTrace();
         } finally {
 
-            Thread.sleep(5000);
+            Thread.sleep(6000);
 
             driver.quit();
 
