@@ -1,16 +1,20 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
 public class TestExample {
     @Test
     public void testExample() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "/Users/artursjermaks/Desktop/webdriver/chromedriver");
-        ChromeDriver driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
