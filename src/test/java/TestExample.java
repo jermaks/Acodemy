@@ -1,53 +1,53 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import page_objects.DragAndDrop;
+
 
 public class TestExample {
-    @Test
-    public void testExample() throws Exception {
+    private static final String TEST_URL = "https://crossbrowsertesting.github.io/drag-and-drop.html";
+    private static final WebDriver driver = new ChromeDriver();
+
+    @BeforeSuite
+    public void setUp() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
 
-        try {
-            driver.get("https://crossbrowsertesting.github.io/drag-and-drop.html");
-            Thread.sleep(2000);
+    @AfterSuite
+    public void tearDown() {
+        driver.quit();
+    }
 
-            WebElement element = driver.findElement(By.id("draggable"));
-            WebElement element2 = driver.findElement(By.id("droppable"));
+    @Test
+    public void testExample() {
+
+            driver.get(TEST_URL);
+
+            DragAndDrop.draggableElement(driver);
+            DragAndDrop.droppableElement(driver);
 
             Actions actions =
                     new Actions(driver);
 
-
             actions
-                    .moveToElement(element)
-                    .clickAndHold()
-                    .moveToElement(element2)
-                    .release()
-                    .build()
-                    .perform();
-
-        } catch (InterruptedException e) {
-
-            e.printStackTrace();
-        } finally {
-
-            Thread.sleep(6000);
-
-            driver.quit();
-
-        }
+                .moveToElement(DragAndDrop.draggableElement(driver))
+                .clickAndHold()
+                .moveToElement(DragAndDrop.droppableElement(driver))
+                .release()
+                .build()
+                .perform();
     }
 }
+
+
 
 
