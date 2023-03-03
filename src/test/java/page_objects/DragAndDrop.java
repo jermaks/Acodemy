@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class DragAndDrop {
+
     private final By DRAGGABLE_ELEMENT = By.id("draggable");
     private final By DROPPABLE_ELEMENT = By.id("droppable");
 

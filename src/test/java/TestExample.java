@@ -1,39 +1,45 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import page_objects.DragAndDrop;
 
-import java.time.Duration;
+import driver_manager.DriverManager;
 
 public class TestExample {
 
-    private static final String TEST_URL = "https://crossbrowsertesting.github.io/drag-and-drop.html";
+    private final String TEST_URL = "https://crossbrowsertesting.github.io/drag-and-drop.html";
     private WebDriver driver;
     private DragAndDrop dragAndDrop;
 
     @BeforeSuite
     public void setUp() {
-        driver = new ChromeDriver();
-        WebDriverManager.chromedriver().setup();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver = DriverManager.get();
         dragAndDrop = new DragAndDrop();
     }
 
     @AfterSuite
     public void tearDown() {
-        driver.quit();
+        DriverManager.quit();
     }
 
     @Test
     public void testExample() {
-            driver.get(TEST_URL);
-            dragAndDrop.moveOneElementToAnother(driver);
+        driver.get(TEST_URL);
+        dragAndDrop.moveOneElementToAnother(driver);
+
+        String expectedTitle = "Dropped!";
+        String originalTitle = driver.findElement(By.id("droppable")).getText();
+        Assert.assertEquals(originalTitle, expectedTitle, "Titles of the website do not match");
 
     }
 }
+
+
+
 
 
 
